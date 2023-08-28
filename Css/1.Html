@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Positioning Items</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style2.css" />
+    <style>
+      /*////////////////////
+        // Positioning items
+        //////////////////////
+
+        Reset *
+        Display: inline vs block
+        https://www.w3schools.com/cssref/pr_class_display.asp
+
+        Box-sizing
+        https://www.w3schools.com/css/css3_box-sizing.asp
+
+        Using percentages and max-width
+        https://www.w3schools.com/cssref/css_units.asp
+
+        Float and clear
+        https://www.w3schools.com/cssref/pr_class_float.asp
+
+        Flexbox - https://www.w3schools.com/css/css3_flexbox.asp
+
+        Absolute/Relative positioning
+        https://www.w3schools.com/cssref/pr_class_position.asp
+
+        Centering
+        https://www.w3schools.com/css/css_align.asp
+
+        */
+     
+      * {
+        /* margin: 0;
+        padding: 0; */
+        box-sizing: border-box;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        
+      }
+      
+      body {
+        margin: 0;
+        background-color: rgb(190, 131, 246);
+      }
+
+      #red {
+        background-color: red;
+      }
+      #green {
+        background-color: green;
+      }
+      #blue {
+        background-color: blue;
+      }
+      #yellow {
+        background-color: yellow;
+        color: black;
+      }
+      #orange {
+        background-color: orange;
+      }
+
+      /* img */
+      img {
+       
+      }
+
+      /* container */
+      .container {
+      }
+
+      /* relative and absolute positioning with blue */
+      #blue {
+      }
+
+      p {
+        color: blue;
+      }
+
+      p {
+        color: brown;
+      }
+      #info {
+        color: rgb(105, 184, 196);
+        font-size: 20px;
+      }
+  
+      .lause {
+        font-size: larger;
+        color: black;
+      }
+
+
+      
+      .puppy {
+        width: 250px;
+        height: auto;
+        float: left;
+        margin-right: 32px;
+        padding: 10px;
+        margin-top: 50px;
+        border-radius: 10%;
+        margin-bottom: 50px;
+        
+      }
+
+
+      
+      .clear {
+        clear: both;
+      }
+
+      .clearfix::after {
+        content: '';
+        clear: both;
+        display: table;
+      }
+      main {
+        margin: 16px auto;
+        
+        padding: 0%;
+        width: 80%;
+        overflow: hidden;
+        position: initial;
+        top: 0;
+        border-radius: 25p;
+        z-index: initial;
+
+       
+        
+      }
+        #infoLaatikko{
+          min-height: 300px;
+          margin-top: 30%;
+          margin-bottom: 10%;
+          border-radius: 25px;
+          background: rgb(182, 178, 178);
+          width: auto;
+          padding: 25px;     
+          overflow: auto;
+          position: relative;
+          top: 0;
+          z-index: 1;
+    
+
+        }
+        .infoTeksti{
+          margin-top: 5%;
+          color: rgb(109, 109, 109);
+          text-align: left;
+          padding: 0%;
+       
+        }
+        .infoTeksti2{
+          margin: top 1pc;
+          color: rgb(109, 109, 109);
+        }
+      h3{
+        margin: auto;
+      }
+      nav {
+        background-color: rgb(119, 37, 149);
+        margin-top: 5px;
+    
+        display: flex;
+        justify-content:left;
+        width: 80%;
+        margin: auto;
+         
+      }
+      #nimi{
+        font-size: 2vw;
+        color: #fbff00;
+        background-color: rgba(0, 0, 0, 0.09);
+        background-size: 50px;
+        line-height: 1.2em;
+        text-align: left;
+        margin-left: 32px;
+      }
+      #navigaattori{
+      display: flex;
+      list-style: none;
+      justify-content: space-evenly;
+      text-align: left;
+      text-decoration: none;
+     
+      line-height: 3rem;
+      font-size: 1.5vw;
+      padding: 1px;
+      width:40%;
+      border-style: outset rgb(247, 251, 0) ;
+     
+}
+      
+
+      /* Tapa 1 */
+      /* nav {
+        overflow: hidden;
+      } */
+      .laatikko{
+        background-color: rgba(96, 41, 178, 0.275);
+        height: 100px;
+        width: 100px;
+        position: absolute;
+        left: 60%;
+        bottom: 35%;
+        z-index: 2;
+        
+      }
+      .laatikko2{
+        background-color: rgb(176, 0, 152);
+        height: 100px;
+        width: 100px;
+        position: fixed;
+        right: 0;
+        top: calc(50% - 50px);
+        text-align: center;
+        padding-top: 40px;
+      
+      }
+
+      footer{
+        background-color: blue;
+        height: auto;
+        text-align: center;
+        padding: 20px 0;
+        margin: 0%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="clearfix">
+      <h2 id="nimi">Tacos locos</h2>
+      <ol id="navigaattori">
+        <li><a href="#">Etusivu</a></li>
+        <li><a href="#">Ruokalista</a></li>
+        <li><a href="#">Yhteistiedot</a></li>
+      </ol>
+
+    </nav>
+    <!-- <h2>sdfjksdjdhj</h2> -->
+    <!-- Float continues, clearing -->
+    <main>
+      <p>coming soon</p>
+     <div class="laatikko"></div>
+      <div id="infoLaatikko">
+        
+         <img src="img/500x500.png" alt="Pentu" class="puppy" />
+         <h3 class="infoTeksti">About us.</h3>
+         <h3>Family founded business</h3>  
+        <p class="infoTeksti2">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque obcaecati eius accusantium temporibus iste, ratione rerum ullam, similique veniam qui aliquid earum quia. Quod quia minima, impedit vero ullam sed? Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil suscipit odio, aspernatur, hic assumenda voluptate debitis aut quam omnis officiis velit recusandae vitae, voluptatum cumque ut. Rerum, totam tempore. Perferendis!
+        </p>
+
+
+
+
+      </div>
+      
+      <div class="laatikko2">insta</div>
+      
+     
+
+      <!-- Responsive images and centering -->
+     
+    </main>
+    <footer>Copyright</footer>
+  </body>
+</html>
