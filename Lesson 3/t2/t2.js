@@ -1,3 +1,4 @@
+'use strict';
 // array for todo list
 const todoList = [
   {
@@ -28,20 +29,23 @@ const todoList = [
 ];
 
 // add your code here
+const ul = document.querySelector('ul');
 
-const ul = document.querySelector('ul'); //makes variable
+for (const todo of todoList) {
+  const li = document.createElement('li');
+  const input = document.createElement('input');
+  const label = document.createElement('label');
 
+  input.type = 'checkbox';
+  input.id = 'todo-' + todo.id;
+  input.checked = todo.completed;
 
-const fragment = document.createDocumentFragment();
-// Append the todo items to the document fragment
-todoList.forEach(item => {
-  const list = document.createElement('li');
-  const li = `<li>
-    <input type="checkbox" id="todo-${item.id}" ${item.completed ? 'checked' : ''}>
-    <label for="todo-${item.id}">${item.task}</label>
-  `;
-  ul.insertAdjacentHTML('beforeend', li);
-});
-
+  label.htmlFor = 'todo-' + todo.id;
+  label.innerText = todo.task;
 
 
+  li.appendChild(input);
+  li.appendChild(label);
+
+  ul.appendChild(li);
+}
