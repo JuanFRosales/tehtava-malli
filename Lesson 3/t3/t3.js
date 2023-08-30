@@ -18,12 +18,6 @@ if (browserVersion && browserVersion.length >= 3) {
   createParagraph("Browser version information not found.");
 }
 
-// Get screen information
-const screenInfo = {
-  width: window.screen.width,
-  height: window.screen.height,
-
-};
 
 // Get screen information
 const fullScreenWidth = screen.width;
