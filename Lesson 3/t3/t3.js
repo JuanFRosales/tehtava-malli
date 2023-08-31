@@ -25,7 +25,7 @@ const options ={
 };
 
 createParagraph(`${userAgent}`)
-createParagraph(`Screen Information: Width:${(window.screen.width)}, Height:${(window.screen.height) }`);
+createParagraph(`Screen Information: Width:${(fullScreenWidth)}, Height:${(fullScreenHeight) }`);
 createParagraph(`Available width for Browser: ${widthDifference}`);
 createParagraph(`Available height for Browser: ${heightDifference}`);
 createParagraph(`Date: ${currentDate.toLocaleDateString('fi-FI', options)}`)
