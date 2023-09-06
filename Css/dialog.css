@@ -1,0 +1,133 @@
+:root {
+    --ratio: 3.74;
+    --cta-color: rgb(0, 102, 254);
+    --light-color-bg: rgb(238, 241, 247);
+    --dark-color-bg: rgb(55, 65, 81);
+    --grey-color: rgb(107, 114, 128);
+    --leading: 0.025em;
+}
+  
+  button {
+    display: block;
+    margin-top: 2rem;
+    width: calc(44px * var(--ratio));
+    height: 44px;
+    border-radius: calc(3px * var(--ratio));
+    border: none;
+    letter-spacing: ccalc(3 * var(--leading, 0.025em));
+    font-family: inherit;
+    color: var(--grey-color);
+    background-color: var(--light-color-bg);
+    font-size: large;
+    font-weight: 700;
+    position: sticky;
+  }
+
+  button:focus {
+    outline: none;
+    border: 0.0625rem solid transparent;
+    box-shadow: 0 0 0 0.125rem #fff, 0 0 0 0.2rem var(--dark-color-bg);
+  }
+  
+  button.cta {
+    background-color: var(--cta-color);
+    color: white;
+  }
+  
+  button.cta:focus {
+    box-shadow: 0 0 0 0.125rem #fff, 0 0 0 0.2rem var(--cta-color);
+  }
+  
+  #open_dialog {
+    margin: 0 auto;
+  }
+  
+  dialog {
+    border: none !important;
+    border-radius: calc(5px * var(--ratio));
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 1.6rem;
+    max-width: 400px;
+    background-color: #ff7a18;
+    background-image: linear-gradient(
+        140deg,#2d45b1 5%,
+        #4554c2 35.07%,
+        #5852c1 45.3%,
+        #8ba2d8 76.05%
+        
+    );
+  }
+  
+  dialog img {
+    display: block;
+    max-width: 75%;
+    margin: 1rem 0 auto 2rem;
+  }
+  dialog::backdrop{
+    /*background-color: #ff7a18;
+    background-image: linear-gradient(
+        130deg,#ff0000,
+        #f2fa01 41.07%,
+        #19f800 76.05%
+    );*/
+    backdrop-filter: blur(16px);
+  }
+  .h1 {
+    margin: 2rem 0 1rem;
+    font-weight: 900;
+  }
+  
+  .h2 {
+    margin: 2rem 0 1rem;
+    font-weight: 800;
+  }
+  
+  p {
+    color: var(--grey-color);
+    letter-spacing: var(--leading, 0.025em);
+    line-height: 1.625;
+  }
+  
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .flex.flex-space-between {
+    justify-content: space-between;
+  }
+  
+  .flex button {
+    margin: 8px auto;
+  }
+  .myForm{
+    margin: 40px;
+    
+  }
+  dialog h1{
+    color: aliceblue;
+    font-size: 50px;
+  }
+
+
+  .myForm label{
+   font-size: 20px;
+   font-family: 'Franklin Gothic Medium', 'Arial', Arial, sans-serif;
+   font-style: italic;
+   color: aliceblue;
+  }
+  .myForm input{
+    margin: 30px;
+    padding: 10px;
+    background-color: #e6e8ff;
+    transition: border-color .9s;
+    border: 1px solid #e6e8ff;
+    border-left: solid 10px;
+  }
+  .myForm input:invalid{
+   border-left-color: rgba(255, 123, 123, 0.695);
+  }
+  .myForm input:valid{
+    border-left-color: #85fd72a3;
+  }
+  

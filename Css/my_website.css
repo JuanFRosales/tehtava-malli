@@ -1,0 +1,152 @@
+* {
+
+box-sizing: border-box;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+:root {
+
+--seal-brown: rgb(141, 37, 9);
+--licorice: rgb(45, 17, 5);
+--old-gold: rgb(169, 178, 44);
+--ecru: rgb(233, 207, 146);
+--prussian-blue: #0E2737ff;
+}
+html{
+  scroll-behavior: smooth;
+}
+
+body {
+margin: 0;
+background-color: var(--ecru);
+
+}
+body:has(dialog[open]){
+ background-color: var(--prussian-blue);
+  overflow-y: hidden;
+}
+
+p{
+  color:  var(--licorice);
+}
+nav {
+background-color: var(--prussian-blue);
+margin-top: 5px;
+
+display: flex;
+justify-content:left;
+width: 80%;
+margin: auto;
+
+}
+main {
+margin: 16px auto;
+padding: 0%;
+width: 80%;
+overflow: hidden;
+position: initial;
+top: 0;
+border-radius: 25p;
+z-index: initial;
+
+
+}
+#infoLaatikko{
+min-height: 300px;
+margin-top: 30%;
+margin-bottom: 10%;
+border-radius: 25px;
+background: var(--prussian-blue);
+width: auto;
+padding: 25px;
+overflow: auto;
+position: relative;
+top: 0;
+z-index: 1;
+
+}
+.taco {
+width: 250px;
+height: auto;
+float: left;
+margin-right: 32px;
+padding: 10px;
+margin-top: 50px;
+border-radius: 10%;
+margin-bottom: 50px;
+filter: saturate(1.7);
+}
+
+.infoTeksti{
+margin-top: 5%;
+color: var(--old-gold);
+text-align: left;
+padding: 0%;
+
+}
+.infoTeksti2{
+margin: top 1pc;
+color: var(--old-gold);
+
+}
+
+h3{
+margin: auto;
+
+}
+
+
+#nimi{
+  font-size: 2.4vw;
+  color: var(--seal-brown);
+  background-size: 50px;
+  line-height: 1.2em;
+  text-align: left;
+  margin-left: 32px;
+  font-style: italic;
+
+
+}
+
+#navigaattori{
+  display: flex;
+  list-style: none;
+  justify-content: space-evenly;
+  text-align: left;
+  text-decoration: none;
+
+  line-height: 3rem;
+  font-size: 1.5vw;
+  padding: 1px;
+  width:40%;
+
+
+}
+
+.laatikko{
+  background-color: rgba(96, 41, 178, 0);
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  left: 60%;
+  bottom: 35%;
+  z-index: 2;
+
+
+}
+.laatikko img{
+  position: relative;
+  height: 150px;
+  filter:brightness(30%)
+}
+
+footer{
+background-color:var(--prussian-blue);
+height: auto;
+text-align: center;
+padding: 20px 0;
+margin: 0%;
+}
+
+
+
