@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>my_website</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="my_website.css" rel="stylesheet">
+    <link href="dialog.css" rel="stylesheet">
+    <script src="dialog.js" defer></script>
+
+  </head>
+
+
+<header>
+  <h2 id="nimi"> Tacos Locos</h2>
+  <div class="nav">
+
+    <ol>
+      <li><a href="#">Home &#127968; </a></li>
+      <li><a href="#menu">Menu &#127790;</a></li>
+   <li><a href="#infoLaatikko">About &#9432; </a></li>
+   <button id="open_dialog">&#128100;</button>
+    </ol>
+
+
+  </div>
+  <div id="welcome">
+    <ul id="text_content">
+<h1>Tacos are for everyone</h1>
+<h2>High quality Tacos</h2>
+<p>"At our kitchen, we craft high-quality tacos with tender, expertly seasoned fillings, wrapped in warm, handmade tortillas, delivering culinary perfection."</p>
+</ul>
+<ul>
+
+</ul>
+  </div>
+</header>
+
+<div class="rating">
+  <h2>How do you feel about tacos?</h2>
+  <ol>
+    <button>I hate tacos</button>
+    <button> I'm neutral</button>
+    <button>I love tacos</button>
+  </ol>
+</div>
+
+    <main>
+      <div class="specialities" id="menu">
+        <div class="pork">
+          <h2> Tacos al pastor</h2>
+          <img src="img/pork.jpeg" alt="al pastor">
+
+         <p>Marinated pork, pineapple, onions, cilantro, and salsa in soft tortilla. Delicious!</p>
+        </div>
+        <div class="beef">
+          <h2> Tacos de carne </h2>
+          <img src="img/Carne-Asada.jpeg" alt="carne asada">
+
+          <p>Grilled, seasoned beef, onions, cilantro, lime, in savory tortilla. Irresistible!</p>
+        </div>
+        <div class="shrimp">
+          <h2> Tacos de camaron</h2>
+          <img src="img/shrimp.jpeg" alt="camaron">
+
+          <p>Zesty shrimp, lime-marinated, tomatoes, onions, cilantro, avocado, in crispy taco shell.</p>
+        </div>
+        <div class="spider">
+          <h2> Tacos de araña</h2>
+          <img src="img/spider.jpeg" alt="spider">
+
+          <p>
+            Exotic delicacy: fried tarantula, spicy seasonings, salsa, wrapped in soft tortilla.</p>
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+
+
+      <div id="infoLaatikko">
+<div class="laatikko"><img src="img/taquito.png" alt="mascot"></div>
+         <img src="img/500x500.png" alt="Tacos" class="taco" />
+         <h3 class="infoTeksti">About us.</h3>
+         <h3>Family founded business</h3>
+        <p class="infoTeksti2">
+         Tacos Locos embraces Mexican culinary traditions, serving authentic tacos, burritos, and more. With a commitment to quality and community, our recipes span generations, infusing every dish with heritage and heart. Join us for a taste of Mexico and become part of our extended family. ¡Buen provecho!
+        </p>
+
+
+
+
+      </div>
+    </main>
+    <footer>Copyright</footer>
+  <dialog>
+    <h1>Create user</h1>
+    <form method="get" class="myForm">
+      <label for="username"> Enter your name:</label>
+        <input
+        type="text"
+        name="username"
+        autocomplete="name"
+        id="nimikenttä"
+        placeholder="Enter your name"
+        minlength="3"
+        required
+     />
+
+     <label for="email"> Enter your email</label>
+    <input
+    type="email"
+    name="email"
+    pattern=".+@metropolia.fi"
+    placeholder="Enter your email"
+    required
+    />
+    <label for="password"> Password (min 8 characters, 1 capital letter)</label>
+    <input type="password"
+    name="pwd"
+    id="salasanakentta"
+    placeholder="Enter your password"
+    pattern="^(?!.*[\s])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
+    required
+    />
+    <label for="terms"> Do you agree to our terms?</label>
+        <label><input type="radio" name="radio" value="yes" /> Yes</label>
+
+
+
+    <div class="flex flex-space-between">
+      <button id="close_dialog">Close</button>
+      <button id="Submit" class="submit">Confirm</button>
+    </div>
+  </form>
+  </dialog>
+
+
+  </body>
+</html>

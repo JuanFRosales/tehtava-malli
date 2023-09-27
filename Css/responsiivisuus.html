@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  html {
+  background:white url(img/500x500.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+body {
+}
+h1{
+  color: antiquewhite;
+}
+p{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 50px;
+}
+
+
+@media only screen and (min-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+
+  h1{
+    font-size: 140 px;
+  }
+
+@media only print and (max-width: 600px) {
+  body{
+    background-color: white;
+  }
+  h1{
+    font-size: 140 px;
+  }
+}
+@media only screen and (max-width: 800px) {
+p{
+  font-size:32px ;
+}
+h1{
+  display: none;
+}
+}
+@media only screen and (min-width: 550px) and (max-width: 820px){
+ body {background-color: red;
+ }
+
+}
+
+#food{
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  display: block;
+}
+#food-object{
+  width: 900px;
+  height: 100px;
+  object-fit: cover;
+  background-color: aliceblue;
+}
+picture{
+  size: 10%;
+}
+#taustakuva{
+  background-color: bisque;
+  display: block;
+  height: 500px;
+  width: 500px;
+  margin-bottom: 50px;
+  background-image: url(img/taquito.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size:cover;
+  background-attachment:fixed ;
+  z-index: 5;
+}
+@media screen and (min-width:600px) {
+  #taustakuva{
+    background-image: url(img/tacos_bg.jpeg);
+  }
+
+}
+</style>
+</head>
+<h1>fdfdhgjhkjk</h1>
+<body>
+<main>
+
+
+<p>Resize the browser window. When the width of this document is 600 pixels or less, the background-color is "lightblue", otherwise it is "lightgreen".</p>
+</main>
+<h2> Max-width ja margin auto kuvalla</h2>
+<img src="img/tacos_bg.jpeg" alt="taco1" id="food">
+<h2>object: fit kuvalle</h2>
+<img src="img/tacos_bg.jpeg" alt="taco1" id="food-object">
+<picture>
+  <source srcset="img/500x500.png" media="(max-width: 700px)">
+  <source src="img/tacos_bg.jpeg">
+  <img src="img/tacos_bg.jpeg" alt="Flowers">
+</picture>
+<h2>Taustakuva</h2>
+<div id="taustakuva"></div>
+<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaqueLorem ipsum dolor sit amet consectetur adipisicing elit. In voluptatem pariatur esse consectetur. Dolores maiores quaerat sapiente nihil ea? Dolorem saepe eos neque maxime assumenda consequuntur possimus et corporis itaque.</div>
+</body>
+</html>
+
+
