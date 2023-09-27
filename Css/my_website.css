@@ -20,11 +20,11 @@ html{
   scroll-behavior: smooth;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
-    background: url(img/tacos_bg.jpeg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+  background: url(img/tacos_bg.jpeg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   }
 header{
   width: 80%;
@@ -361,6 +361,14 @@ margin: 0%;
 
 
 @media only screen and (max-width: 850px){
+  html{
+    background-color: #d3c4a7;
+    opacity: 1;
+    background-image:  linear-gradient(135deg, rgba(77, 117, 2, 0.68) 25%, transparent 25%), linear-gradient(225deg, rgba(77, 117, 2, 0.68) 25%, transparent 25%), linear-gradient(45deg, rgba(77, 117, 2, 0.68) 25%, transparent 25%), linear-gradient(315deg, rgba(77, 117, 2, 0.68) 25%, #d3c4a7 25%);
+    background-position:  21px 0, 21px 0, 0 0, 0 0;
+    background-size: 21px 21px;
+    background-repeat: repeat;
+  }
   .taco{
     width: 100%;
     margin: 0;
