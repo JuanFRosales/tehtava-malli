@@ -69,6 +69,7 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           menuTypeButtons.innerHTML = `
             <button id="dailyMenu" class="active">Daily Menu</button>
             <button id="weeklyMenu">Weekly Menu</button>
+            <button id="close">Close</button>
           `;
           menuTypeButtons.id = 'menubuttons';
           modal.appendChild(menuTypeButtons);
@@ -108,6 +109,7 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
                       `;
                     });
                   });
+
                 } else {
                   menuContent.innerHTML = 'Weekly menu not available.';
                 }
@@ -132,6 +134,8 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
               updateMenuContent('daily');
             } else if (target.id === 'weeklyMenu') {
               updateMenuContent('weekly');
+            } else if (target.id === 'close') {
+              modal.close(); 
             }
           });
 

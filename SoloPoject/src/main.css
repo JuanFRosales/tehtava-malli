@@ -7,6 +7,11 @@ body {
   flex-direction: column;
   align-content: center;
 }
+main{
+display: grid;
+grid-template-rows: 1fr 1fr 1fr;
+
+}
 
 table {
   border-collapse: collapse;
@@ -55,22 +60,21 @@ td {
 }
 
 dialog{
+  grid-template-rows: 1fr 1fr;
+  height: 300px;
+  width: 300px;
+  background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f0f0f0;
-  z-index: 1;
-  display: grid;
-  grid-template-rows: 1fr 0.1fr;
-  font-size: large;
+  border-radius: 15px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  align-self: center;
 
-}
-dialog[open]{
- height: 300px;
 }
 
 #menubuttons{
   display:grid ;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 dialog button{
@@ -80,18 +84,21 @@ dialog button{
   padding: 0.5em 1em;
   margin: 0.5em;
   cursor: pointer;
+
 }
 
 dialog button:hover{
   background-color: #ccc;
+
 }
 
 
 #map {
   height: 400px;
-  width: 50%;
+  width: 80%;
   margin: 0;
   padding: 0;
   align-self: center;
   z-index: 0;
+  position: relative;
  }
