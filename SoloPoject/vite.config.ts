@@ -1,15 +1,16 @@
 import {defineConfig} from 'vite';
-import { VitePWA } from 'vite-plugin-pwa'
+import {VitePWA} from 'vite-plugin-pwa';
+
 export default defineConfig({
   base: './',
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      devOptions:{
+      devOptions: {
         enabled: true,
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpeg,ttf}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,ttf}'],
         sourcemap: true,
       },
       manifest: {
@@ -18,34 +19,43 @@ export default defineConfig({
         display: 'standalone',
         scope: './',
         start_url: './index.html',
-        name: 'vite-pwa-example',
-        short_name: 'vite-pwa',
-        icons:[
+        name: 'restaurant-app',
+        short_name: 'restaurant',
+        icons: [
           {
-            src: '/icons/icon-192x192.png',
+            src: './images/icon-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/icons/icon-256x256.png',
+            src: './images/icon-256x256.png',
             sizes: '256x256',
             type: 'image/png',
           },
           {
-            src: '/icons/icon-384x384.png',
+            src: './images/icon-384x384.png',
             sizes: '384x384',
+            type: 'image/png',
+          },
+          {
+            src: './images/icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: './images/icon-512x512.png',
+            sizes: '512x512',
             type: 'image/png',
             purpose: 'any',
           },
           {
-            src: '/icons/icon-512x512.png',
+            src: './images/icon-512x512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
-          }
-        ]
-    }
-    })
-  ]
-
-})
+          },
+        ],
+      },
+    }),
+  ],
+});

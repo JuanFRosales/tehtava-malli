@@ -1,23 +1,332 @@
-import { errorModal, restaurantModal, restaurantRow } from './components';
-import { fetchData } from './functions';
-import { apiUrl, positionOptions } from './variables';
-import './main.css';
+import {fetchData} from './functions';
+import {UpdateResult} from './interfaces/UpdateResult';
+import {UploadResult} from './interfaces/UploadResult';
+import {LoginUser, User, CreateUser, UpdateUser} from './interfaces/User';
+import {apiUrl, uploadUrl, positionOptions} from './variables';
+import {registerSW} from 'virtual:pwa-register';
+import { errorModal, weekModal, restaurantRow, dayModal, restaurantModal } from './components';
 import { Restaurant } from './interfaces/Restaurant';
-import { MenuData, WeeklyMenuData } from './interfaces/Menu';
+import { Menu, weeklyMenu } from './interfaces/Menu';
 import { initializeMap, addMarkerToMap } from './leafletMap';
 
-const modal = document.querySelector('dialog');
+//registerSW();
+const updateSW = registerSW({
+  immediate: true,
+  onNeedRefresh() {
+    console.log('onNeedRefresh');
+    const update = confirm('New version available. Update?');
+    if (update) {
+      updateSW(true);
+    }
+  },
+  onOfflineReady() {
+    console.log('onOfflineReady');
+    alert('App is offline ready');
+  },
+});
+
+// select forms from the DOM
+const loginForm = document.querySelector('#login-form');
+const profileForm = document.querySelector('#profile-form');
+const avatarForm = document.querySelector('#avatar-form');
+const registrationForm = document.querySelector('#create-form');
+
+
+// select inputs from the DOM
+const usernameInput = document.querySelector('#username')as HTMLInputElement | null;
+const passwordInput = document.querySelector('#password') as HTMLInputElement | null;
+
+const profileUsernameInput = document.querySelector(
+  '#profile-username'
+) as HTMLInputElement | null;
+
+const profileEmailInput = document.querySelector(
+  '#profile-email'
+) as HTMLInputElement | null;
+
+const avatarInput = document.querySelector('#avatar') as HTMLInputElement | null;
+
+// select profile elements from the DOM
+const usernameTarget = document.querySelector('#username-target');
+const emailTarget = document.querySelector('#email-target');
+const avatarTarget = document.querySelector('#avatar-target');
+
+// select registration elements
+
+const createUsername = document.querySelector('#create-username') as HTMLInputElement | null;
+const createPassword = document.querySelector('#create-password') as HTMLInputElement | null;
+const createEmail = document.querySelector('#create-email') as HTMLInputElement | null;
+
+// function to login
+const login = async (user: {
+  username: string;
+  password: string;
+}): Promise<LoginUser> => {
+  const options: RequestInit = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  };
+  return await fetchData<LoginUser>(apiUrl + '/auth/login', options);
+};
+
+// function to register
+
+const create = async (user: {
+  username: string;
+  password: string;
+  email: string;
+}): Promise<CreateUser> => {
+  const options: RequestInit = {
+    method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    body: JSON.stringify(user)
+  };
+  return await fetchData<CreateUser>(apiUrl + '/users', options);
+}
+
+// function to upload avatar
+const uploadAvatar = async (
+  image: File,
+  token: string,
+) : Promise<UploadResult> => {
+  const formData = new FormData();
+  formData.append('avatar', image);
+  const options: RequestInit = {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+    body: formData,
+  };
+  return await fetchData(apiUrl + '/users/avatar', options);
+};
+
+// function to update user data
+const updateUserData = async (
+  user: UpdateUser,
+  token: string,
+): Promise<UpdateResult> => {
+  const options: RequestInit = {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user)
+  }
+  return await fetchData<UpdateResult>(apiUrl + '/users', options)
+};
+
+// function to add userdata profile DOM and edit profile form
+const addUserDataToDom = (user: User): void => {
+  if (
+    !usernameTarget ||
+    !emailTarget ||
+    !avatarTarget ||
+    !profileEmailInput ||
+    !profileUsernameInput
+  ) {
+    return;
+  }
+  usernameTarget.innerHTML = user.username;
+  emailTarget.innerHTML = user.email;
+  (avatarTarget as HTMLImageElement).src = uploadUrl + user.avatar;
+  profileEmailInput.value = user.email;
+  profileUsernameInput.value = user.username;
+};
+
+// function to get userdata from API using token
+const getUserData = async (token: string): Promise<User> => {
+  const options: RequestInit = {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  };
+  return await fetchData<User>(apiUrl + '/users/token', options)
+};
+
+// function to check local storage for token and if it exists fetch
+// userdata with getUserData then update the DOM with addUserDataToDom
+const checkToken = async (): Promise<void> => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return;
+  }
+  const userData = await getUserData(token);
+  addUserDataToDom(userData);
+};
+
+// call checkToken on page load to check if token exists and update the DOM
+checkToken();
+
+// login form event listener
+
+loginForm?.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  if (!usernameInput || !passwordInput) {
+    return;
+  }
+  const user = {
+    username: usernameInput.value,
+    password: passwordInput.value,
+  };
+  const loginData = await login(user);
+  console.log(loginData);
+  alert(loginData.message);
+  localStorage.setItem('token', loginData.token);
+  addUserDataToDom(loginData.data);
+});
+
+// profile form event listener
+
+profileForm?.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  if (!profileUsernameInput || !profileEmailInput) {
+    return;
+  }
+
+  const user = {
+    username: profileUsernameInput.value,
+    email: profileEmailInput.value,
+  }
+
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return;
+  }
+  const profileData = await updateUserData(user, token)
+  console.log(profileData);
+  checkToken();
+  alert(profileData.message)
+}
+)
+
+// avatar form event listener
+
+avatarForm?.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  if (!avatarInput?.files) {
+    return;
+ }
+  const image = avatarInput.files[0];
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return;
+  }
+  const avatarData = await uploadAvatar(image, token);
+  console.log(avatarData);
+  checkToken();
+  alert(avatarData.message)
+}
+)
+
+// registration form event listener
+
+registrationForm?.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+
+  if (!createUsername || !createEmail || !createPassword) {
+    return;
+  }
+
+  const newName = createUsername.value;
+  const newPassword = createPassword.value;
+  const newEmail = createEmail.value;
+
+  const registrationData = {
+    username: newName,
+    password: newPassword,
+    email: newEmail,
+  };
+const registrationResponse = await create(registrationData);
+  alert(registrationResponse.message)
+})
+
+// registration modal
+
+// select registration modal elements from the DOM
+
+const registrationDialog = document.querySelector("#registration_dialog") as HTMLDialogElement;
+const registerBtn = document.getElementById("register") as HTMLButtonElement;
+const closeRegistrationBtn = document.getElementById("close_registration") as HTMLButtonElement;
+
+//buttons' event listeners and their functions for opening and closing
+
+const openRegistration = (e: any) => {
+  e.preventDefault();
+  registrationDialog.showModal();
+};
+
+const closeRegistration = (e: any) => {
+  e.preventDefault();
+  registrationDialog.close();
+};
+
+registerBtn.addEventListener("click", openRegistration);
+closeRegistrationBtn.addEventListener("click", closeRegistration);
+
+// login modal
+
+// select login modal elements from the DOM
+
+const loginDialog = document.getElementById("login_dialog") as HTMLDialogElement;
+const loginBtn = document.getElementById("login") as HTMLButtonElement;
+const closeloginBtn = document.getElementById("close_login") as HTMLButtonElement;
+
+//buttons' event listeners and their functions for opening and closing
+
+const openLogin = (e:any) => {
+  e.preventDefault();
+  loginDialog.showModal();
+};
+
+const closeLogin = (e:any) => {
+  e.preventDefault();
+  loginDialog.close();
+};
+
+loginBtn.addEventListener("click", openLogin);
+closeloginBtn.addEventListener("click", closeLogin);
+
+// profile modal (with profile info, update profile and upload avatar)
+
+// select profile modal elements from the DOM
+
+const profileDialog = document.getElementById("profile_dialog") as HTMLDialogElement;
+const openprofileBtn = document.getElementById("profile") as HTMLButtonElement;
+const closeprofileBtn = document.getElementById("close_profile") as HTMLButtonElement;
+
+// buttons' event listeners and their functions for opening and closing
+
+const openProfile = (e:any) => {
+ e.preventDefault();
+  profileDialog.showModal();
+};
+
+const closeProfile = (e:any) => {
+  e.preventDefault();
+  profileDialog.close();
+};
+
+openprofileBtn.addEventListener("click", openProfile);
+closeprofileBtn.addEventListener("click", closeProfile);
+
+// creating restaurant table
+
+const modal = document.getElementById('info') as HTMLDialogElement;
 if (!modal) {
   throw new Error('Modal not found');
 }
-modal.addEventListener('click', () => {
-  modal.close();
-});
 
 const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
   Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 
-  const createTable = (restaurants: Restaurant[], map: L.Map) => {
+  const createTable = (restaurants: Restaurant[]) => {
     const table = document.querySelector('table');
     if (!table) {
       throw new Error('Table not found');
@@ -28,242 +337,157 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
       table.appendChild(tr);
       tr.addEventListener('click', async () => {
         try {
-          // Remove all highlights
+          // remove all highlights
           const allHighs = document.querySelectorAll('.highlight');
           allHighs.forEach((high) => {
             high.classList.remove('highlight');
           });
-
-          // Add highlight
+          // add highlight
           tr.classList.add('highlight');
-
-          // Fetch both daily and weekly menus
-          const dailyMenu = await fetchData<MenuData>(
-            apiUrl + `/restaurants/daily/${restaurant._id}/fi`
-          );
-          const weeklyMenu = await fetchData<WeeklyMenuData>(
-            apiUrl + `/restaurants/weekly/${restaurant._id}/fi`
-          );
-
+          // add restaurant data to modal
           modal.innerHTML = '';
 
-          // Display daily menu by default
-          const menuContent = document.createElement('div');
-          if (dailyMenu && Array.isArray(dailyMenu.courses)) {
-            dailyMenu.courses.forEach((course) => {
-              const { name, diets, price } = course;
-              menuContent.innerHTML += `
-                <p>${name}</p>
-                <p>Diet: ${diets ?? ' - '}</p>
-                <p>Price: ${price ?? ' - '}</p>
-                <hr />
-              `;
-            });
-          } else {
-            menuContent.innerHTML = 'Daily menu not available.';
-          }
-          modal.appendChild(menuContent);
+          // info modal
+          // fetch daily and weekly menus and restaurant data
 
-          // Add buttons for switching between daily and weekly menus
-          const menuTypeButtons = document.createElement('div');
-          menuTypeButtons.innerHTML = `
-            <button id="dailyMenu" class="active">Daily Menu</button>
-            <button id="weeklyMenu">Weekly Menu</button>
-            <button id="close">Close</button>
-          `;
-          menuTypeButtons.id = 'menubuttons';
-          modal.appendChild(menuTypeButtons);
+          const dayMenu = await fetchData<Menu>(apiUrl + `/restaurants/daily/${restaurant._id}/en`);
+          const weekMenu = await fetchData<weeklyMenu>(apiUrl + `/restaurants/weekly/${restaurant._id}/en`);
 
-          const updateMenuContent = async (menuType: string) => {
-            menuContent.innerHTML = '';
+          const info = await fetchData<Restaurant>(apiUrl + `/restaurants/${restaurant._id}`)
+          const infoModal = restaurantModal(info);
+          modal.insertAdjacentHTML('beforeend', infoModal);
+          modal.showModal()
 
-            try {
-              if (menuType === 'daily') {
-                if (dailyMenu && Array.isArray(dailyMenu.courses)) {
-                  dailyMenu.courses.forEach((course) => {
-                    const { name, diets, price } = course;
-                    menuContent.innerHTML += `
-                      <p>${name}</p>
-                      <p>Diet: ${diets ?? ' - '}</p>
-                      <p>Price: ${price ?? ' - '}</p>
-                      <hr />
-                    `;
-                  });
-                } else {
-                  menuContent.innerHTML = 'Daily menu not available.';
-                }
-              } else if (menuType === 'weekly') {
-                // Fetch the weekly menu data
-                if (weeklyMenu && Array.isArray(weeklyMenu.days)) {
-                  weeklyMenu.days.forEach((day) => {
-                    const { date, courses } = day;
-                    menuContent.innerHTML += `<h3>${date}</h3>`;
+          const closeIcon = document.getElementById('close');
+          closeIcon?.addEventListener ('click', () => {
+              modal.close()
+            })
 
-                    courses.forEach((course) => {
-                      const { name, diets, price } = course;
-                      menuContent.innerHTML += `
-                        <p>${name}</p>
-                        <p>Diet: ${diets ?? ' - '}</p>
-                        <p>Price: ${price ?? ' - '}</p>
-                        <hr />
-                      `;
-                    });
-                  });
+          // select info modal's elements from the DOM
 
-                } else {
-                  menuContent.innerHTML = 'Weekly menu not available.';
-                }
-              }
-            } catch (error) {
-              menuContent.innerHTML = 'Error fetching menu data.';
-              console.error(error);
-            }
+          const day_btn = document.getElementById('dayInfo');
+          const week_btn = document.getElementById('weekInfo');
+          const day_menu = document.getElementById('day_menu') as HTMLDialogElement;
+          const week_menu = document.getElementById('week_menu') as HTMLDialogElement;
 
-            const buttons = menuTypeButtons.querySelectorAll('button');
-            buttons.forEach((button) => button.classList.remove('active'));
-            const selectedButton = menuType === 'daily' ? document.getElementById('dailyMenu') : document.getElementById('weeklyMenu');
-            if (selectedButton) {
-              selectedButton.classList.add('active');
-            }
-          };
+          // buttons' event listeners for displaying daily and weekly menu
 
-          // Event listener for menu type buttons
-          menuTypeButtons.addEventListener('click', (event) => {
-            const target = event.target as HTMLButtonElement;
-            if (target.id === 'dailyMenu') {
-              updateMenuContent('daily');
-            } else if (target.id === 'weeklyMenu') {
-              updateMenuContent('weekly');
-            } else if (target.id === 'close') {
-              modal.close(); 
-            }
-          });
+          day_btn?.addEventListener('click', () => {
+            const dayMenuHtml = dayModal(dayMenu);
+            day_menu.innerHTML = dayMenuHtml;
+            day_menu.showModal()
+            modal.close()
+          })
 
-          // Prevent modal from closing when clicking the menu buttons
-          menuTypeButtons.addEventListener('click', (event) => {
-            event.stopPropagation();
-          });
+          week_btn?.addEventListener('click', () => {
+            const weekMenuHtml = weekModal(weekMenu);
+            week_menu.innerHTML = weekMenuHtml;
+            week_menu.showModal();
+            modal.close()
+          })
 
-          modal.showModal();
+          day_menu.addEventListener('click', () => {
+            day_menu.close();
+            modal.showModal()
+          })
 
-          // Add a marker for the selected restaurant to the map
-          addMarkerToMap(map, restaurant);
+          week_menu.addEventListener('click', () => {
+            week_menu.close();
+            modal.showModal();
+          })
         } catch (error) {
           modal.innerHTML = errorModal((error as Error).message);
           modal.showModal();
         }
       });
     });
-    return calculateDistance;
   };
 
+  const error = (err: GeolocationPositionError) => {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  };
+
+  // get the closest restaurant based on the user's location
 
 
 
+  const success = async (pos: GeolocationPosition) => {
+    try {
+      const crd = pos.coords;
+      const restaurants = await fetchData<Restaurant[]>(apiUrl + '/restaurants');
+      console.log(restaurants);
+      restaurants.sort((a, b) => {
+        const x1 = crd.latitude;
+        const y1 = crd.longitude;
+        const x2a = a.location.coordinates[1];
+        const y2a = a.location.coordinates[0];
+        const distanceA = calculateDistance(x1, y1, x2a, y2a);
+        const x2b = b.location.coordinates[1];
+        const y2b = b.location.coordinates[0];
+        const distanceB = calculateDistance(x1, y1, x2b, y2b);
+        return distanceA - distanceB;
+      });
+      createTable(restaurants);
 
-const error = (err: GeolocationPositionError) => {
-  console.warn(`ERROR(${err.code}): ${err.message}`);
-};
 
-const success = async (pos: GeolocationPosition) => {
-  try {
-    const crd = pos.coords;
-    const restaurants = await fetchData<Restaurant[]>(apiUrl + '/restaurants');
 
-    // Initialize the Leaflet map
-    const map = initializeMap('map');
+      // filtering by company
 
-    restaurants.forEach((restaurant) => {
-      // Add a marker for each restaurant on the map
-      addMarkerToMap(map, restaurant);
-    });
+      const sodexoBtn = document.querySelector('#sodexo');
+      const compassBtn = document.querySelector('#compass');
+      const resetBtn = document.querySelector('#reset');
 
-    createTable(restaurants, map);
 
-    // Buttons for filtering by city
-    const filterHelsinkiBtn = document.querySelector('#filterHelsinki');
-    const filterEspooBtn = document.querySelector('#filterEspoo');
-    const filterVantaaBtn = document.querySelector('#filterVantaa');
-    const filterTampereBtn = document.querySelector('#filterTampere');
-    const filterTurkuBtn = document.querySelector('#filterTurku');
-    const filterOthersBtn = document.querySelector('#filterOthers');
-    const resetBtn = document.querySelector('#reset');
+      if (!sodexoBtn || !compassBtn || !resetBtn) {
+        throw new Error('Button not found');
+      }
+      sodexoBtn.addEventListener('click', () => {
+        const sodexoRestaurants = restaurants.filter(
+          (restaurant) => restaurant.company === 'Sodexo'
+        );
+        console.log(sodexoRestaurants);
+        createTable(sodexoRestaurants);
+      });
 
-    if (!filterHelsinkiBtn) {
-      throw new Error('Button not found');
-    }
-    if (!filterEspooBtn) {
-      throw new Error('Button not found');
-    }
-    if (!filterVantaaBtn) {
-      throw new Error('Button not found');
-    }
-    if (!filterTampereBtn) {
-      throw new Error('Button not found');
-    }
-    if (!filterTurkuBtn) {
-      throw new Error('Button not found');
-    }
-    if (!filterOthersBtn) {
-      throw new Error('Button not found');
-    }
-    if (!resetBtn) {
-      throw new Error('Button not found');
-    }
+      compassBtn.addEventListener('click', () => {
+        const compassRestaurants = restaurants.filter(
+          (restaurant) => restaurant.company === 'Compass Group'
+        );
+        console.log(compassRestaurants);
+        createTable(compassRestaurants);
+      });
 
-    // Filter restaurants based on city
-    filterHelsinkiBtn.addEventListener('click', () => {
-      const helsinkiRestaurants = restaurants.filter(
-        (restaurant) => restaurant.city === 'Helsinki'
-      );
-      createTable(helsinkiRestaurants, map);
-    });
+      resetBtn.addEventListener('click', () => {
+        createTable(restaurants);
+      });
 
-    filterEspooBtn.addEventListener('click', () => {
-      const espooRestaurants = restaurants.filter(
-        (restaurant) => restaurant.city === 'Espoo'
-      );
-      createTable(espooRestaurants, map);
-    });
 
-    filterVantaaBtn.addEventListener('click', () => {
-      const vantaaRestaurants = restaurants.filter(
-        (restaurant) => restaurant.city === 'Vantaa'
-      );
-      createTable(vantaaRestaurants, map);
-    });
 
-    filterTampereBtn.addEventListener('click', () => {
-      const tampereRestaurants = restaurants.filter(
-        (restaurant) => restaurant.city === 'Tampere'
-      );
-      createTable(tampereRestaurants, map);
-    });
+      const cityDropdown = document.getElementById('cityDropdown') as HTMLSelectElement;
 
-    filterTurkuBtn.addEventListener('click', () => {
-      const turkuRestaurants = restaurants.filter(
-        (restaurant) => restaurant.city === 'Turku'
-      );
-      createTable(turkuRestaurants, map);
-    });
+      // Add an event listener to the dropdown to handle the selection
+      cityDropdown.addEventListener('change', () => {
+        // Get the selected city value from the dropdown
+        const selectedCity = cityDropdown.value;
 
-    filterOthersBtn.addEventListener('click', () => {
-      const otherCitiesRestaurants = restaurants.filter(
-        (restaurant) =>
-          !['Helsinki', 'Espoo', 'Vantaa', 'Turku', 'Tampere'].includes(
-            restaurant.city
-          )
-      );
-      createTable(otherCitiesRestaurants, map);
-    });
+        // Filter restaurants based on the selected city
+        const filteredRestaurants = restaurants.filter(
+          (restaurant) => restaurant.city === selectedCity
+        );
 
-    resetBtn.addEventListener('click', () => {
-      createTable(restaurants, map);
-    });
+        // Update the table with the filtered results
+        createTable(filteredRestaurants);
+      });
+
   } catch (error) {
-    modal.innerHTML = errorModal((error as Error).message);
-    modal.showModal();
+     modal.innerHTML = errorModal((error as Error).message);
+     modal.showModal();
   }
-};
+  };
 
-navigator.geolocation.getCurrentPosition(success, error, positionOptions);
+  navigator.geolocation.getCurrentPosition(success, error, positionOptions);
+
+  const checkbox = document.getElementById("checkbox") as HTMLElement;
+  checkbox.addEventListener("change", () => {
+  document.body.classList.toggle("dark")
+})

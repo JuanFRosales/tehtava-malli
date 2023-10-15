@@ -1,23 +1,16 @@
-interface MenuData {
-    daily: Course[];
-    weekly: Course[];
-    courses: Course[]
-  }
+interface weeklyMenu {
+  days: Menu[]
+}
 
-  interface Course {
-    name: string;
-    price: string;
-    diets: string[];
-  }
+interface Menu {
+  date: string;
+  courses: Course[],
+}
 
-  interface MenuDay {
-    date: string;
-    courses: Course[];
-  }
+interface Course {
+  price: string;
+  name: string;
+  diets: string[];
+}
 
-  interface WeeklyMenuData  extends MenuData{
-    id: string;
-    lang: string;
-    days: MenuDay[];
-  }
-export type { Course, MenuData, WeeklyMenuData };
+export type {Menu, weeklyMenu}

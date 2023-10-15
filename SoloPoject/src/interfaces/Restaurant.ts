@@ -1,17 +1,16 @@
 interface Restaurant {
-    _id: string;
-    name: string;
-    address: string;
-    companyId: number;
-    postalCode: string;
-    city: string;
-    phone: string;
-    location : {
+  _id: string;
+  name: string;
+  location: {
+      type: 'Point';
       coordinates: number[];
-      type: 'point';
-    };
-    company: 'Sodexo'|'Compass Group'
+  };
+  company: 'Sodexo' | 'Compass Group';
+  address: string;
+  city: string;
+  postalCode: string;
+  phone: string;
+  companyId: number;
+}
 
-  }
-
-export type {Restaurant};
+export type {Restaurant}
