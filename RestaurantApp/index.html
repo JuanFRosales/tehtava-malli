@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link href="/main.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Example Vite PWA">
+  <link rel="apple-touch-icon" href="./public/images/icon-192x192.png" sizes="192x192">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Restaurant App</title>
+  <script src="src/main.ts" type="module"></script>
+  <script src="https://kit.fontawesome.com/438aeadf51.js" crossorigin="anonymous"></script>
+  <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+
+</head>
+
+<body>
+  <div class="nav_content">
+  <nav class="nav">
+    <div id="toggle">
+      <input type="checkbox" class="checkbox" id="checkbox">
+      <label for="checkbox" class="checkbox-label">
+        <i class="fa-solid fa-moon fa-xl" id="moon"></i>
+        <i class="fa-solid fa-sun fa-xl" id="sun"></i>
+        <span class="ball"></span>
+      </label>
+    </div>
+    <ul>
+    <li><i class="fa-solid fa-utensils fa-2xl" style="color: #ffffff;" id="logo"></i></li>
+    <li><h1 id="appName">Restaurant App</h1></li>
+    <li><i class="fa-solid fa-user-plus fa-2xl" style="color: #ffffff;" id="register"></i></li>
+    <li><i class="fa-solid fa-right-to-bracket fa-2xl" style="color: #ffffff;" id="login"></i></li>
+    <li><i class="fa-solid fa-user fa-2xl" style="color: #ffffff;" id="profile"></i></li>
+  </ul>
+</nav>
+</div>
+  <div>
+    <dialog id="registration_dialog">
+      <h2 id="registration_title">Sign up</h2>
+        <form id="create-form">
+          <label for="create-username">Enter your name: </label>
+          <input type="text" id="create-username" name="create-username" autocomplete="name" required class="form_inputs">
+          <label for="create-password">Enter your password: </label>
+          <input type="password" id="create-password" name="create-password" required pattern="^(?=.*[A-Z])(?=.*\d).*$" class="form_inputs">
+          <label for="create-email">Enter your email: </label>
+          <input type="email" id="create-email" name="create-email" required class="form_inputs">
+          <button id="close_registration" class="form_button">Close</button>
+          <input type="submit" value="Create a profile" class="submit_button">
+        </form>
+    </dialog>
+    <div>
+      <dialog id="login_dialog">
+        <h2>Log in into your account</h2>
+          <form id="login-form" onsubmit="loginBtn.disabled">
+            <label for="username">Enter your name: </label>
+            <input type="text" id="username" name="username" autocomplete="name" placeholder="Insert name" required class="form_inputs">
+            <label for="password">Enter your password: </label>
+            <input type="password" id="password" name="password" placeholder="Password" required pattern="^(?=.*[A-Z])(?=.*\d).*$" class="form_inputs">
+            <button id="close_login" class="form_button">Close</button>
+            <input type="submit" value="Login" class="submit_button" id="loginBtn">
+          </form>
+      </dialog>
+      <div>
+        <dialog id="profile_dialog">
+          <h2 id="profile_title" class="h2">Profile</h2>
+          <p>Username: <span id="username-target"></span></p>
+          <p>E-mail: <span id="email-target"></span></p>
+          <img id="avatar-target" src="" alt="Avatar">
+          <h2>Upload avatar</h2>
+          <form id="avatar-form">
+              <label for="avatar">Choose image</label>
+              <input id="avatar" type="file" name="avatar">
+              <input type="submit" value="Upload avatar" class="submit_button">
+          </form>
+        <h2>Edit profile</h2>
+            <form id="profile-form">
+              <label for="profile-username">Enter your name</label>
+              <input type="text" id="profile-username" name="username" autocomplete="name" placeholder="Example" required class="form_inputs">
+              <label for="profile-email">Enter your new email</label>
+              <input id="profile-email" type="email" name="email" autocomplete="email" placeholder="example@gmail.com" required class="form_inputs">
+              <button id="close_profile" class="form_button">Close</button>
+              <input type="submit" value="Update profile" class="submit_button">
+            </form>
+        </dialog>
+      </div>
+  <div class="content">
+  <div class="filter">
+    <h2>Reset filters</h2>
+    <button id="reset">Show all</button>
+    <h2>Filter by company</h2>
+    <button id="sodexo">Sodexo</button>
+    <button id="compass">Compass Group</button>
+    <h2>Filter by city</h2>
+  <select id="cityDropdown">
+  <option id="Helsinki">Helsinki</option>
+  <option id="Hämeenlinna">Hämeenlinna</option>
+  <option id="Tampere">Tampere</option>
+  <option id="Seinäjoki">Seinäjoki</option>
+  <option id="Kokkola">Kokkola</option>
+  <option id="Turku">Turku</option>
+  <option id="Valkeakoski">Valkeakoski</option>
+  <option id="Vantaa">Vantaa</option>
+  <option id="Ikaalinen">Ikaalinen</option>
+  <option id="Espoo">Espoo</option>
+  <option id="Joensuu">Joensuu</option>
+  <option id="Kuopio">Kuopio</option>
+  <option id="Rovaniemi">Rovaniemi</option>
+  <option id="Pori">Pori</option>
+  <option id="Oulu">Oulu</option>
+  <option id="Liminka">Liminka</option>
+  <option id="Ylivieska">Ylivieska</option>
+  <option id="Vaasa">Vaasa</option>
+  <option id="Järvenpää">Järvenpää</option>
+  <option id="Jyväskylä">Jyväskylä</option>
+  <option id="Kemi">Kemi</option>
+  <option id="Hyvinkää">Hyvinkää</option>
+</select>
+    </select>
+  </div>
+  <div class="restaurantList">
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+    </tr>
+    <!-- add restaurants here -->
+  </table>
+  <!-- modal -->
+  <dialog id="info">
+    <!-- add restaurant info here when restaurant is clicked -->
+  </dialog>
+  <dialog id="day_menu"></dialog>
+  <dialog id="week_menu"></dialog>
+</div>
+</div>
+
+
+</body>
+</html>
