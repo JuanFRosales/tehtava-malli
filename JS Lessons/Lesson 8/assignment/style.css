@@ -1,0 +1,39 @@
+
+@font-face {
+  font-family: 'Lora';
+  src: url('Lora-Regular.ttf');
+}
+body {
+ font-family: 'Lora';
+ background-image: url('NY.jpg');
+ background-size: cover;
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+}
+p{
+  color: rgb(249, 237, 220);
+  background-color: rgba(255, 167, 59, 0.415);
+}
+h1{
+  color: rgb(249, 237, 220);
+}
+
+/* Make content area fill the entire browser window */
+html,
+.fullscreen {
+  display: flex;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Center the content in the browser window */
+.container {
+  margin: auto;
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+}

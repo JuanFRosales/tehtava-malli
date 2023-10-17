@@ -1,0 +1,15 @@
+
+@font-face {
+  font-family: 'caligrafitti';
+  src: url('Calligraffitti-Regular.ttf');
+}
+
+body{
+  text-align: center;
+  font-family: 'caligrafitti';
+}
+
+img{
+  height: 200px;
+  width: 200px;
+}

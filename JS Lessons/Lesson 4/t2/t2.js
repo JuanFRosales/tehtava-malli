@@ -787,11 +787,10 @@ function renderRestaurants() {
 
     table.appendChild(tr);
 
-    tr.addEventListener('click', function() {
-      document.querySelectorAll('table th:first-child').forEach(function(nameCell) {
+    tr.addEventListener('click', function () {
+      document.querySelectorAll('table th:first-child').forEach(nameCell => {
         nameCell.classList.remove('highlight');
       });
-
       nameCell.classList.add('highlight');
       openModal(restaurant);
     });
@@ -828,4 +827,6 @@ function orderAlphabetically(a, b) {
 
 restaurants.sort(orderAlphabetically);
 
-document.innerText(renderRestaurants);
+document.addEventListener('DOMContentLoaded', function () {
+  renderRestaurants();
+});

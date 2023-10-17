@@ -1,5 +1,5 @@
 {
-  "name": "esim-1",
+  "name": "tools",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,13 +10,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^8.47.0",
+    "eslint": "^8.42.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "vite-plugin-pwa": "^0.16.5"
-  },
-  "dependencies": {
-    "create-vite": "^4.4.1"
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1"
   }
 }
