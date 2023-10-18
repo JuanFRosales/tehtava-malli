@@ -7,8 +7,6 @@ const urlsToCache = [
   '/main.ts',
   '/images/icon-192x192.png',
   '/images/icon-512x512.png',
-  '/images/light_background.jpg',
-  '/images/dark_background.jpg',
 
   // Include other URLs you want to cache (e.g., JavaScript files, images, etc.)
 ];

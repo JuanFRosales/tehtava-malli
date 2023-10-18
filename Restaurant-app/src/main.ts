@@ -3,23 +3,27 @@ import {UpdateResult} from './interfaces/UpdateResult';
 import {UploadResult} from './interfaces/UploadResult';
 import {LoginUser, User, CreateUser, UpdateUser} from './interfaces/User';
 import {apiUrl, uploadUrl, positionOptions} from './variables';
+import {registerSW} from 'virtual:pwa-register';
 import { errorModal, weekModal, restaurantRow, dayModal, restaurantModal } from './components';
 import { Restaurant } from './interfaces/Restaurant';
 import { Menu, weeklyMenu } from './interfaces/Menu';
-//import { initializeMap, addMarkerToMap } from './leafletMap';
+import { initializeMap, addMarkerToMap } from './leafletMap';
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('./SW/service-worker.js')
-      .then((registration) => {
-        console.log('Service Worker registered with scope:', registration.scope);
-      })
-      .catch((error) => {
-        console.error('Service Worker registration failed:', error);
-      });
-  });
-}
+//registerSW();
+const updateSW = registerSW({
+  immediate: true,
+  onNeedRefresh() {
+    console.log('onNeedRefresh');
+    const update = confirm('New version available. Update?');
+    if (update) {
+      updateSW(true);
+    }
+  },
+  onOfflineReady() {
+    console.log('onOfflineReady');
+    alert('App is offline ready');
+  },
+});
 
 // select forms from the DOM
 const loginForm = document.querySelector('#login-form');
@@ -321,6 +325,7 @@ if (!modal) {
 
 const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
   Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+  const map = initializeMap('map');
 
   const createTable = (restaurants: Restaurant[]) => {
     const table = document.querySelector('table');
@@ -328,6 +333,7 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
       throw new Error('Table not found');
     }
     table.innerHTML = '';
+
     restaurants.forEach((restaurant) => {
       const tr = restaurantRow(restaurant);
       table.appendChild(tr);
@@ -353,6 +359,8 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) =>
           const infoModal = restaurantModal(info);
           modal.insertAdjacentHTML('beforeend', infoModal);
           modal.showModal()
+          // add marker to the map for the selected restaurant
+          addMarkerToMap(map, restaurant);
 
           const closeIcon = document.getElementById('close');
           closeIcon?.addEventListener ('click', () => {

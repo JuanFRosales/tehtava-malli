@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Nunito+Sans:opsz@6..12&display=swap');
+
 /*general rules*/
 
 
@@ -18,7 +20,7 @@ body {
   margin: 0;
   position: relative;
   transition: background 0.9s ease-in;
-  background-image: url("././public/images/light_background.jpg");
+  background-image: url("/public/images/light_background.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -82,7 +84,6 @@ i {
   display: grid;
   margin: auto;
   padding: 10px;
-  grid-gap: 20px;
   top: 150px;
   text-align: left;
   background-color: #cccccc51;
@@ -128,6 +129,15 @@ select{
   box-sizing: border-box;
   background-color: #fffbff;
 
+}
+#map{
+  width: 100%;
+  height: 200px;
+  z-index: 1;
+  margin: auto;
+  border-radius: 20px;
+  grid-row: 2;
+  grid-column: 1;
 }
 
 
@@ -208,7 +218,7 @@ table {
   margin: 0;
   padding: 0;
   cursor: pointer;
-  min-width: 100%;
+  width: 100%;
 }
 
 th {
@@ -226,9 +236,6 @@ td {
   text-align: center;
   }
 
-tr {
-  width: 900px;
-}
 
 #menu_name, #course_label {
   width: 300px;
@@ -249,16 +256,17 @@ tr {
 }
 
 .restaurantList {
-  background-color: whitesmoke;
+  background-color:var(--ash-gray);
   font-size: 20px;
   padding: 35px;
   margin: 10px;
   border-radius: 20px;
-  grid-row: 2 ;
+  grid-row: 3 ;
   grid-column: 1;
-  height: 750px;
+  height: auto;
   overflow: auto;
   text-align: left;
+  width: 100%;
 }
 
 #weekInfo, #dayInfo {
@@ -344,6 +352,9 @@ body.dark .filter select{
   color: #fffbff;
   border: none;
 }
+body.dark #map{
+  filter: brightness(60%);
+}
 
 body.dark .restaurantList {
   background-color: var(--dark-hookers-green);
@@ -351,8 +362,8 @@ body.dark .restaurantList {
 }
 
 body.dark .form_button, .submit_button {
-  background-color: var(--dark-hookers-green);
-  color: #fffbff;
+  background-color: var(--ash-gray);
+  color: var(--dark-hookers-green);
 }
 
 body.dark th {
@@ -382,10 +393,18 @@ body.dark #dayInfo {
 body.dark #close {
   color: var(--ash-gray)
 }
+
+
 /* media rules*/
 
 @media screen and (max-width: 600px) {
   #appName{
     display: none;
+
   }
+  table{
+    font-size: 15px;
+  }
+
+
 }
