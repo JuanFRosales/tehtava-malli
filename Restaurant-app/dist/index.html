@@ -3,16 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <link href="public/main.css" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+  <link href="./main.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Example Vite PWA">
-  <link rel="apple-touch-icon" href="./public/images/icon-192x192.png" sizes="192x192">
-  <link rel="image" href="public/images/light_background.jpg">
-  <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" href="./assets/icon-192x192-7271e9e5.png" sizes="192x192">
+  <meta name="theme-color" content="#103111">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Restaurant App</title>
-  <script type="module" src="src/main.ts"></script>
+
   <script src="https://kit.fontawesome.com/438aeadf51.js" crossorigin="anonymous"></script>
   <link
   rel="stylesheet"
@@ -26,7 +25,8 @@
   crossorigin=""
 ></script>
 
-</head>
+  <script type="module" crossorigin src="./assets/index-c0301fde.js"></script>
+<link rel="manifest" href="./manifest.webmanifest"></head>
 
 <body>
   <div class="nav_content">
@@ -131,6 +131,7 @@
 </select>
     </select>
   </div>
+  <div id="map"></div>
   <div class="restaurantList">
   <table>
     <tr>
@@ -147,7 +148,6 @@
   <dialog id="week_menu"></dialog>
 </div>
 </div>
-
 
 </body>
 </html>
