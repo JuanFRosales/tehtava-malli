@@ -16,17 +16,24 @@ async function fetchData(url, options) {
       name: 'John Doe',
       job: 'Developer',
     };
-    const url = 'https://reqres.in/api';
+    const url = 'https://reqres.in/api/users';
     const options = {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      // body: JSON.stringify(user),
+      body: JSON.stringify(user),
     };
-    const userData = await fetchData(url, options);
-    console.log(userData);
+
+    const userDataPromise = fetchData(url, options); 
+    userDataPromise
+      .then(userData => {
+        console.log(userData);
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
   } catch (error) {
-    alert(error.message);
+    console.error(error.message);
   }
 })();
