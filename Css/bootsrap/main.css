@@ -1,0 +1,53 @@
+body {
+    margin-top: 40px;
+  }
+
+main {
+    background-color: var(--bs-info);
+}
+
+.box {
+    background-color: pink;
+    border: 1px solid black;
+    min-height: 100px;
+}
+  .breakpoint {
+    display: inline-block;
+  }
+  
+  .breakpoint::after {
+    content: "XS";
+    color: red;
+    font-weight: bold;
+  }
+  
+  
+  @media (min-width: 576px) {
+    .breakpoint::after {
+      content: "SM";
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .breakpoint::after {
+      content: "MD";
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .breakpoint::after {
+      content: "LG";
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .breakpoint::after {
+      content: "XL";
+    }
+  }
+  
+  @media (min-width: 1400px) {
+    .breakpoint::after {
+      content: "XXL";
+    }
+  }
